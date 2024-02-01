@@ -17,7 +17,8 @@ DEBUG = True
 AUTH_USER_MODEL = 'Account.User'
 
 ALLOWED_HOSTS=['*']
-
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = ('*',)
 
 # Application definition
 
@@ -167,8 +168,7 @@ REST_AUTH = {
     # 'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
 }
 # JWT_AUTH_SECURE = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['*']
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
