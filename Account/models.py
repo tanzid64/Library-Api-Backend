@@ -11,6 +11,7 @@ class User(TimeStampMixin, AbstractUser):
     balance = models.DecimalField(decimal_places=2, max_digits=12, default=0)
     email = models.EmailField(unique=True)
     is_mod = models.BooleanField(default=False)
+    is_publisher = models.BooleanField(default=False)
     
     objects = UserManager()
     USERNAME_FIELD = 'email'

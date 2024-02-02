@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     # myApps
     'Account',
     'core',
+    'category',
+    'publisher',
+    'book',
+    'review',
 ]
 
 
