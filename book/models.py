@@ -7,7 +7,7 @@ from django_countries.fields import CountryField
 class Author(TimeStampMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    avater = models.ImageField(upload_to='media/author_image')
+    avater = models.ImageField(upload_to='media/author_image', null=True)
     description = models.TextField()
 
 class Language(TimeStampMixin):
@@ -23,6 +23,6 @@ class Book(TimeStampMixin):
     isbn = models.CharField(max_length=50)
     pages = models.CharField(max_length=10)
     edition = models.CharField(max_length=10)
-    cover = models.ImageField(upload_to='media/book_cover/')
+    cover = models.ImageField(upload_to='media/book_cover/', null=True)
     publication_date = models.DateField()
     quantity = models.IntegerField()
