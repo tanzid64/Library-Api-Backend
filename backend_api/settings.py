@@ -20,7 +20,7 @@ AUTH_USER_MODEL = 'Account.User'
 
 ALLOWED_HOSTS=['*']
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOWED_ORIGINS = ('*',)
+CSRF_TRUSTED_ORIGINS = ('http://*','https://e-library-z7s7.onrender.com',)
 
 # Application definition
 
