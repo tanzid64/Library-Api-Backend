@@ -73,7 +73,7 @@ ROOT_URLCONF = 'backend_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Account/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -147,11 +147,13 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email Setting for Allauth
 SITE_ID = 1
-ACCOUNT_EMAIL_REQUIRED = (True)
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'rest_login'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'rest_login'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_URL = 'https://localhost:8000/accounts/login'
 # Email Setting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -176,6 +178,8 @@ REST_AUTH = {
     'JWT_AUTH_HTTPONLY':False,
     'LOGIN_SERIALIZER': 'Account.serializers.UserLoginSerializer',
     'USER_DETAILS_SERIALIZER': 'Account.serializers.UserDetailsSerializer',
+    'OLD_PASSWORD_FIELD_ENABLED': True,
+    # 'PASSWORD_RESET_USE_SITES_DOMAIN': True,
     # 'JWT_AUTH_COOKIE': 'my-app-auth',
     # 'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
 }
