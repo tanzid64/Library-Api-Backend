@@ -180,8 +180,8 @@ REST_AUTH = {
     'USER_DETAILS_SERIALIZER': 'Account.serializers.UserDetailsSerializer',
     'OLD_PASSWORD_FIELD_ENABLED': True,
     # 'PASSWORD_RESET_USE_SITES_DOMAIN': True,
-    # 'JWT_AUTH_COOKIE': 'my-app-auth',
-    # 'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
 }
 # JWT_AUTH_SECURE = True
 
