@@ -16,6 +16,8 @@ from rest_framework import status, viewsets, permissions
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+# from dj_rest_auth.views import UserDetailsView as BaseUserDetailsView
+
 
 
 class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Grant, use this
@@ -36,4 +38,13 @@ class UserAddressView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Addresses.objects.filter(user=self.request.user)
     
+# class UserDetailsView(BaseUserDetailsView):
+#     permission_classes = [permissions.IsAuthenticated]
 
+#     def put(self, request, *args, **kwargs):
+#         partial = kwargs.pop('partial', False)
+#         instance = self.request.user
+#         serializer = self.get_serializer(instance, data=request.data, partial=partial)
+#         serializer.is_valid(raise_exception=True)
+#         self.perform_update(serializer)
+#         return Response(serializer.data)

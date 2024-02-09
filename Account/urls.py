@@ -4,6 +4,7 @@ from allauth.account.views import ConfirmEmailView
 from .views import GoogleLogin, RedirectView, UserAddressView
 
 router = routers.DefaultRouter()
+# router.register('', UserDetailsView, basename='user-profile-api')
 router.register('address', UserAddressView, basename='profile-address-api')
 
 urlpatterns = [

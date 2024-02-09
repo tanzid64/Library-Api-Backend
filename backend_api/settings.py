@@ -1,6 +1,7 @@
 from pathlib import Path
 import dj_database_url
 import environ
+from datetime import timedelta
 env = environ.Env()
 environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,7 +37,7 @@ INSTALLED_APPS = [
     # RestFramework
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     # RestAuth
     'dj_rest_auth',
     'dj_rest_auth.registration',
@@ -174,6 +175,7 @@ REST_AUTH = {
     'USE_JWT': True,
     'JWT_AUTH_HTTPONLY':False,
     'LOGIN_SERIALIZER': 'Account.serializers.UserLoginSerializer',
+    'USER_DETAILS_SERIALIZER': 'Account.serializers.UserDetailsSerializer',
     # 'JWT_AUTH_COOKIE': 'my-app-auth',
     # 'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
 }
@@ -183,3 +185,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+# JWT Token Configuration
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
