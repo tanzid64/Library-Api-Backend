@@ -12,4 +12,4 @@ class Transaction(TimeStampMixin):
     user = models.ForeignKey(User, related_name='transaction', on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=2, max_digits=12)
     type = models.CharField(choices=TRANSACTION_TYPE)
-    book = models.ForeignKey(Book, null=True, related_name='transaction', on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, default=None, related_name='transaction', on_delete=models.CASCADE)

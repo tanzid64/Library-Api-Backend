@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import DepositSerializer, BuyBookSerializer
+from .serializers import DepositSerializer, BuyBookSerializer, TransactionReportSerializer
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,7 +8,7 @@ from .models import Transaction
 from book.models import Book
 # Create your views here.
 class DepositView(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
         serializer = DepositSerializer(data=request.data)
         if serializer.is_valid():
@@ -31,7 +31,7 @@ class DepositView(APIView):
 
 class BuyBookAPIView(generics.CreateAPIView):
     serializer_class = BuyBookSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         book_id = request.data.get('book')
@@ -46,15 +46,24 @@ class BuyBookAPIView(generics.CreateAPIView):
                 publisher = book.publisher
                 publisher.balance += amount
                 publisher.save()
+                book.quantity -= 1
+                book.save()
 
                 data = {'amount': amount, 'book': book_id, 'type': 'Purchase'}
-                serializer = self.get_serializer(data=data)
+                serializer = self.get_serializer(data=data, context = {'amount':amount, 'user':user})
                 serializer.is_valid(raise_exception=True)
                 serializer.save(user=request.user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({'success': 'Purchase Successfull'}, status=status.HTTP_201_CREATED)
             else:
                 return Response({'error': 'Insufficient Balance.'}, status=status.HTTP_402_PAYMENT_REQUIRED)
         else:
             return Response({'error': 'Low Quantity.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        
+class TransactionReport(generics.ListAPIView):
+    serializer_class = TransactionReportSerializer
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        return Transaction.objects.filter(user = self.request.user)
+    
 
         
