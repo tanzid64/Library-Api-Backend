@@ -25,3 +25,4 @@ class Book(TimeStampMixin):
     cover = models.ImageField(upload_to='media/book_cover/', null=True)
     publication_date = models.DateField(null=True)
     quantity = models.IntegerField()
+    price = models.DecimalField( max_digits=12, decimal_places=2, default=0)
