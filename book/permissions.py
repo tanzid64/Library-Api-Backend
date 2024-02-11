@@ -33,3 +33,9 @@ class CanManageBooks(BasePermission):
             return True
         
         return False
+    
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "GET":
+            return True
+        return False

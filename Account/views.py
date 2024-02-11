@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions
-
+from book.permissions import ReadOnly
 # All auth
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
@@ -38,10 +38,13 @@ class UserAddressView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Addresses.objects.filter(user=self.request.user)
     
-class AllUserView(ListAPIView):
-    serializer_class = AllUserSerializer
-    queryset = User.objects.all()
 
-class AllPublisherView(ListAPIView):
+class AllUserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    permission_classes = [ReadOnly,]
     serializer_class = AllUserSerializer
+
+class AllPublisherView(viewsets.ModelViewSet):
     queryset = User.objects.filter(is_publisher=True)
+    permission_classes = [ReadOnly,]
+    serializer_class = AllUserSerializer

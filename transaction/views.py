@@ -38,16 +38,23 @@ class BuyBookAPIView(generics.CreateAPIView):
         book = Book.objects.get(pk=book_id)
         if book.quantity > 0:
             user = self.request.user
-            amount = book.price
-            
-            user.balance -= amount
-            user.save()
-            publisher = book.publisher
-            publisher.balance += amount
-            publisher.save()
+            if user.balance >= book.price:
+                amount = book.price
+                
+                user.balance -= amount
+                user.save()
+                publisher = book.publisher
+                publisher.balance += amount
+                publisher.save()
 
-            data = {'amount': amount, 'book': book_id, 'type': 'Purchase'}
-            serializer = self.get_serializer(data=data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                data = {'amount': amount, 'book': book_id, 'type': 'Purchase'}
+                serializer = self.get_serializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response({'error': 'Insufficient Balance.'}, status=status.HTTP_402_PAYMENT_REQUIRED)
+        else:
+            return Response({'error': 'Low Quantity.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        
