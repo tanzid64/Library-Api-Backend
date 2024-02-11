@@ -38,13 +38,3 @@ class UserAddressView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Addresses.objects.filter(user=self.request.user)
     
-# class UserDetailsView(BaseUserDetailsView):
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def put(self, request, *args, **kwargs):
-#         partial = kwargs.pop('partial', False)
-#         instance = self.request.user
-#         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_update(serializer)
-#         return Response(serializer.data)
