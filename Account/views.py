@@ -1,6 +1,6 @@
 from typing import Any
 from django.shortcuts import render, redirect
-from .serializers import UserLoginSerializer, UserAddressSerializer
+from .serializers import UserLoginSerializer, UserAddressSerializer, AllUserSerializer
 from .models import User, Addresses
 from .utils import send_registration_email
 from django.contrib.auth import authenticate
@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import RedirectView
 # Rest Framework
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions
 
@@ -38,3 +38,6 @@ class UserAddressView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Addresses.objects.filter(user=self.request.user)
     
+class AllUserView(ListAPIView):
+    serializer_class = AllUserSerializer
+    queryset = User.objects.all()

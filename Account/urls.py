@@ -3,7 +3,7 @@ from rest_framework import routers
 from dj_rest_auth.views import PasswordResetConfirmView
 from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
-from .views import GoogleLogin, RedirectView, UserAddressView
+from .views import GoogleLogin, RedirectView, UserAddressView, AllUserView
 
 router = routers.DefaultRouter()
 # router.register('', UserDetailsView, basename='user-profile-api')
@@ -17,4 +17,5 @@ urlpatterns = [
     path('account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     re_path('confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(),name='account_confirm_email'),
     path('~redirect/', RedirectView.as_view(), name='redirect'),
+    path('all-user', AllUserView.as_view(), name='all-user-api'),
 ]

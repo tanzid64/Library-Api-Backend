@@ -22,3 +22,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
             'username': {'required': False},
             'avater': {'required': False},
         }
+
+class AllUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','username', 'first_name', 'last_name', 'created_at']
