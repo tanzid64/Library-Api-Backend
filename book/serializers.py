@@ -13,26 +13,14 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(many=False)
+    publisher = serializers.StringRelatedField(many=False)
+    category = serializers.StringRelatedField(many=False)
     class Meta:
         model = Book
         fields = '__all__'
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
-        # Set required=False for fields that should not be required during updates
-        for field_name in ['pages', 'edition', 'quantity', 'author', 'category', 'publisher']:
-            self.fields[field_name].required = False
-
-class BookPutSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Book
-        exclude = ('publisher',)  # Exclude the 'publisher' field from the serializer
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
         # Set required=False for fields that should not be required during updates
         for field_name in ['pages', 'edition', 'quantity', 'author', 'category', 'publisher']:
             self.fields[field_name].required = False

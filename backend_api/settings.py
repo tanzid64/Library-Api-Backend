@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'publisher',
     'book',
     'review',
+    'transaction',
 ]
 
 

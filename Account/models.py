@@ -16,6 +16,8 @@ class User(TimeStampMixin, AbstractUser):
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username',)
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
 
 class Addresses(TimeStampMixin):
     user = models.ForeignKey(User, related_name='address', on_delete=models.CASCADE)

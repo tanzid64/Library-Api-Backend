@@ -13,6 +13,9 @@ class Category(TimeStampMixin):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    def __str__(self) -> str:
+        return self.title
+
 # class SubCategory(TimeStampMixin):
 #     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategory')
 #     title = models.CharField(max_length=255)

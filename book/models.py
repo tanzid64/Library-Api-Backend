@@ -10,6 +10,9 @@ class Author(TimeStampMixin):
     avater = models.ImageField(upload_to='media/author_image', null=True)
     description = models.TextField()
 
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
 class Book(TimeStampMixin):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name = 'book')
