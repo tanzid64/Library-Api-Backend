@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .serializers import AuthorSerializer, BookSerializer
+from .serializers import AuthorSerializer, BookSerializer, BookListCreateSerializer
 from .models import Author, Book
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, status, permissions, generics
 from category.permissions import IsModOrPublisherOrUser
 from .permissions import CanManageBooks
 # Create your views here.
@@ -23,5 +23,11 @@ class BookView(viewsets.ModelViewSet):
         # Assigning the publisher to the logged-in user during book update
         serializer.save(publisher=self.request.user)
 
+class BookListCreateView(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookListCreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(publisher=self.request.user)
 
 
