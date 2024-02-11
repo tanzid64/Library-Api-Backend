@@ -41,3 +41,7 @@ class UserAddressView(viewsets.ModelViewSet):
 class AllUserView(ListAPIView):
     serializer_class = AllUserSerializer
     queryset = User.objects.all()
+
+class AllPublisherView(ListAPIView):
+    serializer_class = AllUserSerializer
+    queryset = User.objects.filter(is_publisher=True)
