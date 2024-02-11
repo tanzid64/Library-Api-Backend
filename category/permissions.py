@@ -10,12 +10,16 @@ class IsModOrPublisherOrUser(BasePermission):
 
     def has_permission(self, request, view):
         # Allow read-only access for all users (GET, HEAD, OPTIONS)
-        if request.method == 'GET':
+        if request.method in ['GET', 'HEAD', 'OPTIONS']:
             return True
 
         # Allow creation for publishers and moderators
-        if request.method == 'POST' and (request.user.is_publisher or request.user.is_mod):
-            return True
+        if request.method == 'POST' and request.user.is_authenticated:
+            return request.user.is_publisher or request.user.is_mod
 
         # Allow edit and delete access for moderators only
-        return request.user.is_mod
+        if request.user.is_authenticated:
+            return request.user.is_mod
+
+        # Deny access for anonymous users for edit and delete operations
+        return False

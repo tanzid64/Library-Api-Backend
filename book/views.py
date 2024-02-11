@@ -7,4 +7,7 @@ from category.permissions import IsModOrPublisherOrUser
 class AuthorView(viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
-    permission_classes = ( IsModOrPublisherOrUser,)
+    permission_classes = [ IsModOrPublisherOrUser]
+
+
+
