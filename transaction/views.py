@@ -4,7 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 class DepositView(APIView):
-    serializer_class = DepositSerializer
-    permission_classes = [IsAuthenticated]
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def post(self, request, *args, **kwargs):
+        serializer = DepositSerializer(data=request.data)
+        if serializer.is_valid():
+            amount = serializer.validate_data['amount']
+            user = request.user

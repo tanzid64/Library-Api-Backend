@@ -16,6 +16,8 @@ class BookSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(many=False)
     publisher = serializers.StringRelatedField(many=False)
     category = serializers.StringRelatedField(many=False)
+    title = serializers.CharField(required=False)
+    cover = serializers.ImageField(required=False)
     class Meta:
         model = Book
         fields = '__all__'
