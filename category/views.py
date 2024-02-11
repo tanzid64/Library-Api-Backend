@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .serializers import CategorySerializer, SubCategorySerializer
-from .models import Category, SubCategory
+from .serializers import CategorySerializer
+from .models import Category
 from rest_framework import viewsets
 from .permissions import IsModOrPublisherOrUser
 
@@ -11,9 +11,9 @@ class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = (IsModOrPublisherOrUser,)
 
-class SubCategoryView(viewsets.ModelViewSet):
-    serializer_class = SubCategorySerializer
-    queryset = SubCategory.objects.all()
-    permission_classes = (IsModOrPublisherOrUser,)
+# class SubCategoryView(viewsets.ModelViewSet):
+#     serializer_class = SubCategorySerializer
+#     queryset = SubCategory.objects.all()
+#     permission_classes = (IsModOrPublisherOrUser,)
 
 

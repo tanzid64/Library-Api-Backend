@@ -1,7 +1,7 @@
 from django.db import models
 from core.models import TimeStampMixin
 from publisher.models import Publisher
-from category.models import SubCategory
+from category.models import Category
 from django_countries.fields import CountryField
 # Create your models here.
 class Author(TimeStampMixin):
@@ -17,7 +17,7 @@ class Language(TimeStampMixin):
 class Book(TimeStampMixin):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name = 'book')
-    category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='book')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='book')
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name='book')
     language = models.ForeignKey(Language, null=True, on_delete=models.SET_NULL)
     isbn = models.CharField(max_length=50)
