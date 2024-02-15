@@ -11,6 +11,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions
 from book.permissions import ReadOnly
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Simple JWT
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -70,6 +71,7 @@ class UserLoginView(APIView):
 class UserProfileView(RetrieveUpdateAPIView):
     renderer_classes = [UserRenderer]
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self):
         return self.request.user
@@ -93,6 +95,10 @@ class UserProfileView(RetrieveUpdateAPIView):
         return Response(serializer.data)
 
     def perform_update(self, serializer):
+        if 'image' in self.request.data:
+            # Handle image upload
+            image = self.request.data['image']
+            serializer.validated_data['image'] = image
         serializer.save()
 
 class UserPasswordChangeView(APIView):
