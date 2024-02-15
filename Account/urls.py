@@ -1,4 +1,6 @@
 from django.urls import path, include, re_path
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework import routers
 from dj_rest_auth.views import PasswordResetConfirmView
 from allauth.account.views import ConfirmEmailView
@@ -21,4 +23,4 @@ urlpatterns = [
     path('~redirect/', RedirectView.as_view(), name='redirect'),
     # path('all-user', AllUserView.as_view(), name='all-user-api'),
     # path('all-publisher', AllPublisherView.as_view(), name='all-publisher-api'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
