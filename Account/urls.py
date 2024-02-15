@@ -5,7 +5,7 @@ from rest_framework import routers
 from dj_rest_auth.views import PasswordResetConfirmView
 from allauth.account.views import ConfirmEmailView
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
-from .views import GoogleLogin, RedirectView, UserAddressView, AllPublisherView, AllUserViewSet
+from .views import RedirectView, UserAddressView, AllPublisherView, AllUserViewSet, UserRegistrationView, UserLoginView, UserPasswordChangeView, SendPasswordResetEmailView, UserPasswordResetView
 
 router = routers.DefaultRouter()
 # router.register('', UserDetailsView, basename='user-profile-api')
@@ -14,13 +14,11 @@ router.register('all-user', AllUserViewSet, basename='all-user-api')
 router.register('all-publisher', AllPublisherView, basename='all-user-api')
 
 urlpatterns = [
-    path('', include('dj_rest_auth.urls')),
-    path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('', include(router.urls)),
-    path('registration/', include('dj_rest_auth.registration.urls')),
-    path('account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
-    re_path('confirm-email/(?P<key>[-:\w]+)/$', ConfirmEmailView.as_view(),name='account_confirm_email'),
-    path('~redirect/', RedirectView.as_view(), name='redirect'),
-    # path('all-user', AllUserView.as_view(), name='all-user-api'),
-    # path('all-publisher', AllPublisherView.as_view(), name='all-publisher-api'),
+    path('register/', UserRegistrationView.as_view(), name='registration-api'),
+    path('login/', UserLoginView.as_view(), name='login-api'),
+    path('password/change/', UserPasswordChangeView.as_view(), name='password-change-api'),
+    path('password/reset/', SendPasswordResetEmailView.as_view(), name='password-reset-api'),
+    path('password-reset-confirm/<uid>/<token>/', UserPasswordResetView.as_view(), name='password-reset-confirm-api'),
+
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
