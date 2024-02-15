@@ -9,6 +9,6 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('publisher/create/', OpenPublisherView.as_view(), name='create-publisher-api'),
-    
+    path('create/', OpenPublisherView.as_view(), name='create-publisher-api'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -17,5 +17,5 @@ class User(TimeStampMixin, AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username',)
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.username}"
 
