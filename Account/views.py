@@ -13,7 +13,8 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions
 from book.permissions import ReadOnly
-# All auth
+
+# Simple JWT
 from rest_framework_simplejwt.tokens import RefreshToken
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -21,7 +22,6 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
-
 
 class UserAddressView(viewsets.ModelViewSet):
     serializer_class = UserAddressSerializer

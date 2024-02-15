@@ -2,10 +2,7 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
-from dj_rest_auth.views import PasswordResetConfirmView
-from allauth.account.views import ConfirmEmailView
-from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
-from .views import RedirectView, UserAddressView, AllPublisherView, AllUserViewSet, UserRegistrationView, UserLoginView, UserPasswordChangeView, SendPasswordResetEmailView, UserPasswordResetView
+from .views import UserAddressView, AllPublisherView, AllUserViewSet, UserRegistrationView, UserLoginView, UserPasswordChangeView, SendPasswordResetEmailView, UserPasswordResetView
 
 router = routers.DefaultRouter()
 # router.register('', UserDetailsView, basename='user-profile-api')
