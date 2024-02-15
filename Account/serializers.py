@@ -56,7 +56,14 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        fields = "__all__"
+        exclude = ['password', 'groups' , 'user_permissions']
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False)
+    class Meta: 
+        model = User
+        fields = ['username', 'email', 'phone', 'avater', 'first_name', 'last_name']
 
 class UserPasswordChangeSerializer(serializers.Serializer):
     password = serializers.CharField(style={'input_type':'password'}, write_only=True)
