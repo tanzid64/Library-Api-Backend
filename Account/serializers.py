@@ -1,16 +1,11 @@
 from rest_framework import serializers
 from rest_framework.fields import empty
-from .models import User, Addresses
+from .models import User
 from .utils import send_registration_email
     
 from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-
-class UserAddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Addresses
-        fields = "__all__"
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     class Meta:

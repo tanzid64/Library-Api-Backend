@@ -2,15 +2,14 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
-from .views import UserAddressView, AllPublisherView, AllUserViewSet, UserRegistrationView, UserLoginView, UserPasswordChangeView, SendPasswordResetEmailView, UserPasswordResetView, UserProfileView
+from .views import AllPublisherView, AllUserViewSet, UserRegistrationView, UserLoginView, UserPasswordChangeView, SendPasswordResetEmailView, UserPasswordResetView, UserProfileView
 
 router = routers.DefaultRouter()
-# router.register('', UserDetailsView, basename='user-profile-api')
-router.register('address', UserAddressView, basename='profile-address-api')
 router.register('all-user', AllUserViewSet, basename='all-user-api')
 router.register('all-publisher', AllPublisherView, basename='all-user-api')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('register/', UserRegistrationView.as_view(), name='registration-api'),
     path('profile/', UserProfileView.as_view(), name='profile-api'),
     path('login/', UserLoginView.as_view(), name='login-api'),

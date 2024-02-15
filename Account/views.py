@@ -1,8 +1,8 @@
 from typing import Any
 from django.shortcuts import render, redirect
-from .serializers import UserLoginSerializer, UserAddressSerializer, AllUserSerializer, UserRegistrationSerializer, UserProfileSerializer, UserProfileUpdateSerializer, UserPasswordChangeSerializer, SendPasswordResetEmailSerializer, UserPasswordResetSerializer
-from .models import User, Addresses
-from .utils import send_registration_email
+from .serializers import UserLoginSerializer, AllUserSerializer, UserRegistrationSerializer, UserProfileSerializer, UserProfileUpdateSerializer, UserPasswordChangeSerializer, SendPasswordResetEmailSerializer, UserPasswordResetSerializer
+from .models import User
+
 from django.contrib.auth import authenticate
 from .renders import UserRenderer
 # Rest Framework
@@ -22,13 +22,6 @@ def get_tokens_for_user(user):
         'access': str(refresh.access_token),
     }
 
-class UserAddressView(viewsets.ModelViewSet):
-    serializer_class = UserAddressSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Addresses.objects.filter(user=self.request.user)
-    
 
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -95,10 +88,10 @@ class UserProfileView(RetrieveUpdateAPIView):
         return Response(serializer.data)
 
     def perform_update(self, serializer):
-        if 'image' in self.request.data:
+        if 'avater' in self.request.data:
             # Handle image upload
-            image = self.request.data['image']
-            serializer.validated_data['image'] = image
+            image = self.request.data['avater']
+            serializer.validated_data['avater'] = image
         serializer.save()
 
 class UserPasswordChangeView(APIView):
