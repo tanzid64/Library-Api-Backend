@@ -6,3 +6,7 @@ class OpenPublisherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publisher
         fields = ['name', 'logo', 'address']
+
+class AllPublisherSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = "__all__"
