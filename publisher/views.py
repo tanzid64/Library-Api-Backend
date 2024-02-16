@@ -3,9 +3,11 @@ from .serializers import OpenPublisherSerializer, AllPublisherSerializer, EditPu
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters
 from rest_framework.response import Response
 from .permissions import IsAdminOrOwner
 from .models import Publisher
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 class OpenPublisherView(CreateAPIView):
     serializer_class = OpenPublisherSerializer
@@ -21,6 +23,9 @@ class OpenPublisherView(CreateAPIView):
 class AllPublisherView(ListAPIView):
     serializer_class = AllPublisherSerializer
     queryset = Publisher.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['id', 'name']
+    search_fields = ['name']
 
 class PublisherUpdateView(RetrieveUpdateAPIView):
     serializer_class = EditPublisherSerializer
