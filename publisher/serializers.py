@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Publisher
+from book.serializers import BookSerializer
 
 class OpenPublisherSerializer(serializers.ModelSerializer):
     # logo = serializers.ImageField(required=False, source='image')
@@ -7,7 +8,20 @@ class OpenPublisherSerializer(serializers.ModelSerializer):
         model = Publisher
         fields = ['name', 'logo', 'address']
 
-class AllPublisherSerializer(serializers.ModelSerializer):
+class EditPublisherSerializer(serializers.ModelSerializer):
+    book = BookSerializer(many=True)
     class Meta:
         model = Publisher
-        fields = "__all__"
+        fields = ['name', 'logo', 'address']
+    def __init__(self, *args, **kwargs):
+        super(EditPublisherSerializer, self).__init__(*args, **kwargs)
+        # Make fields optional for partial updates
+        for field_name in self.fields.keys():
+            self.fields[field_name].required = False
+
+class AllPublisherSerializer(serializers.ModelSerializer):
+    book = BookSerializer(many=True)
+    class Meta:
+        model = Publisher
+        # exclude = ['balance']
+        fields = ['id', 'created_at', 'name', 'logo', 'address', 'book']

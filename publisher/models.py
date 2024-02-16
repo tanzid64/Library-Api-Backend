@@ -8,3 +8,6 @@ class Publisher(TimeStampMixin):
     logo = models.ImageField(upload_to='media/logo/', null=True)
     address = models.CharField(max_length=255)
     balance = models.DecimalField(decimal_places=2, max_digits=12, default=0)
+
+    def __str__(self):
+        return self.name

@@ -17,7 +17,7 @@ class Book(TimeStampMixin):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name = 'book')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='book')
-    publisher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book', limit_choices_to={'is_publisher': True})
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name='book')
     language = models.CharField(max_length=100, null=True, blank=True)
     isbn = models.CharField(max_length=50, null=True)
     pages = models.CharField(max_length=10)
@@ -26,3 +26,6 @@ class Book(TimeStampMixin):
     publication_date = models.DateField(null=True)
     quantity = models.IntegerField()
     price = models.DecimalField( max_digits=12, decimal_places=2, default=0)
+
+    def __str__(self) -> str:
+        return self.title
