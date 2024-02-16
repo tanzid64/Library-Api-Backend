@@ -85,7 +85,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
             user = User.objects.get(email=email)
             uid = urlsafe_base64_encode(force_bytes(user.id))
             token = PasswordResetTokenGenerator().make_token(user)
-            link = 'http://localhost:8000/accounts/password/reset/'+uid + '/'+token
+            link = 'https://e-library-z7s7.onrender.com/accounts/password/reset/'+uid + '/'+token
             send_registration_email(user, 'E-Lit: Reset your password', link, 'pass_reset_mail.html', email)
             return attrs
         else:

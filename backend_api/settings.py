@@ -153,7 +153,7 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email Setting for Allauth
 
-LOGIN_URL = 'https://localhost:8000/accounts/login'
+LOGIN_URL = 'https://e-library-z7s7.onrender.com/accounts/login'
 # Email Setting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
