@@ -9,4 +9,5 @@ class OpenPublisherSerializer(serializers.ModelSerializer):
 
 class AllPublisherSerializer(serializers.ModelSerializer):
     class Meta:
+        model = Publisher
         fields = "__all__"
