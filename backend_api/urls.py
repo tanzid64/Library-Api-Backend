@@ -10,5 +10,6 @@ urlpatterns = [
     path('',include('category.urls')),
     path('', include('book.urls')),
     path('', include('transaction.urls')),
+    path('', include('review.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

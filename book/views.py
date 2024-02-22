@@ -23,7 +23,7 @@ class BookView(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id', 'language', 'isbn', 'publication_date', 'category', 'author']
-    search_fields = ['title', 'isbn']
+    search_fields = ['title', 'isbn', 'language']
         
     def perform_create(self, serializer):
         if 'cover' in self.request.data: 

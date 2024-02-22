@@ -9,7 +9,7 @@ class OpenPublisherSerializer(serializers.ModelSerializer):
         fields = ['name', 'logo', 'address']
 
 class EditPublisherSerializer(serializers.ModelSerializer):
-    book = BookSerializer(many=True)
+    # book = BookSerializer(many=True)
     class Meta:
         model = Publisher
         fields = ['name', 'logo', 'address']
@@ -20,8 +20,8 @@ class EditPublisherSerializer(serializers.ModelSerializer):
             self.fields[field_name].required = False
 
 class AllPublisherSerializer(serializers.ModelSerializer):
-    book = BookSerializer(many=True)
+    # book = BookSerializer(many=True)
     class Meta:
         model = Publisher
         # exclude = ['balance']
-        fields = ['id', 'created_at', 'name', 'logo', 'address', 'book']
+        fields = ['id', 'created_at', 'name', 'logo', 'address']
