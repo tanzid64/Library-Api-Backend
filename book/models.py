@@ -22,7 +22,7 @@ class Book(TimeStampMixin):
     isbn = models.CharField(max_length=50, null=True, blank=True)
     pages = models.CharField(max_length=10)
     edition = models.CharField(max_length=10)
-    cover = models.ImageField(upload_to='media/book_cover/', default='./media/book_cover/default.jpg')
+    cover = models.ImageField(upload_to='book/book_cover/', default='./book/book_cover/default.jpg')
     publication_date = models.DateField(null=True, blank=True)
     quantity = models.IntegerField()
     price = models.DecimalField( max_digits=12, decimal_places=2, default=0)
