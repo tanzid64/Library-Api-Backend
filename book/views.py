@@ -6,6 +6,7 @@ from rest_framework import viewsets, status, permissions, generics, filters
 from category.permissions import IsModOrPublisherOrUser
 from .permissions import CanManageBooks
 from django_filters.rest_framework import DjangoFilterBackend
+from .paginations import BookPagination
 
 
 class AuthorView(viewsets.ModelViewSet):
@@ -20,7 +21,9 @@ class BookView(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
     permission_classes = (CanManageBooks,)
+    pagination_class = BookPagination
     parser_classes = (MultiPartParser, FormParser)
+    # Filter Section
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id', 'language', 'isbn', 'publication_date', 'category', 'author']
     search_fields = ['title', 'isbn', 'language']
