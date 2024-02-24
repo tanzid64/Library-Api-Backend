@@ -7,7 +7,7 @@ from category.models import Category
 class Author(TimeStampMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    avater = models.ImageField(upload_to='media/author_image', null=True)
+    avater = models.ImageField(upload_to='book/author_avater', default='./book/author_avater/avater.jpg')
     description = models.TextField()
 
     def __str__(self) -> str:
