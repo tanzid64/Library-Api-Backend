@@ -1,10 +1,10 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-class BookPagination(PageNumberPagination):
+class ReviewPagination(PageNumberPagination):
     page_size = 1
     page_query_param = "p"
     page_size_query_param = "records"
-    max_page_size = 40
+    max_page_size = 10
     def get_paginated_response(self, data):
         return Response({
             'total_objects': self.page.paginator.count,
@@ -14,5 +14,5 @@ class BookPagination(PageNumberPagination):
             'previous': self.get_previous_link(),
             'results': data,
         })
-    
+
 

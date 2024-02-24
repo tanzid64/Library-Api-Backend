@@ -6,11 +6,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import BookReview
 from book.models import Book
+from .paginations import ReviewPagination
 # Create your views here.
 
 class BookReviewView(ModelViewSet):
     queryset = BookReview.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]  # Ensure the user is authenticated
+    pagination_class = ReviewPagination
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return BookReviewGetSerializer
