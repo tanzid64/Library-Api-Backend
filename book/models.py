@@ -7,7 +7,7 @@ from category.models import Category
 class Author(TimeStampMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    avater = models.ImageField(upload_to='author_avater/', default='./static/avater.jpg')
+    avater = models.ImageField(upload_to='author_avater/', default='./author_avater/avater.jpg')
     description = models.TextField()
 
     def __str__(self) -> str:
@@ -22,7 +22,7 @@ class Book(TimeStampMixin):
     isbn = models.CharField(max_length=50, null=True, blank=True)
     pages = models.CharField(max_length=10)
     edition = models.CharField(max_length=10)
-    cover = models.ImageField(upload_to='book_cover/', default='./static/default.jpg')
+    cover = models.ImageField(upload_to='book_cover/', default='./book_cover/default.jpg')
     publication_date = models.DateField(null=True, blank=True)
     quantity = models.IntegerField()
     price = models.DecimalField( max_digits=12, decimal_places=2, default=0)

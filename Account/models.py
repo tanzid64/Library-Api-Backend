@@ -5,7 +5,7 @@ from .managers import UserManager
 
 # Create your models here.
 class User(TimeStampMixin, AbstractUser):
-    avater = models.ImageField(upload_to='profile_picture/', default="./static/avater.jpg")
+    avater = models.ImageField(upload_to='profile_picture/', default="./profile_picture/avater.jpg")
     phone = models.CharField(max_length=15, null=True)
     balance = models.DecimalField(decimal_places=2, max_digits=12, default=0)
     email = models.EmailField(unique=True)
