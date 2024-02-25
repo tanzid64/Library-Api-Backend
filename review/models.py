@@ -16,6 +16,7 @@ class BookReview(TimeStampMixin):
     rating = models.CharField(choices=RATING, max_length=3)
     comment = models.TextField()
 
+
 class AuthorReview():
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book_review')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='book_review')
