@@ -59,6 +59,10 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
         fields = ['username', 'email', 'phone', 'avater', 'first_name', 'last_name']
+    def get_image_url(self, obj):
+        if obj.avater:
+            return self.context['request'].build_absolute_uri(obj.avater.url)
+        return None
 
 class UserPasswordChangeSerializer(serializers.Serializer):
     password = serializers.CharField(style={'input_type':'password'}, write_only=True)
