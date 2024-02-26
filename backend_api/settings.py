@@ -93,10 +93,17 @@ WSGI_APPLICATION = 'backend_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# On Render Database
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Feel free to alter this value to suit your needs.
+#         default=env("DATABASE_LINK"),
+#     )
+# }
 DATABASES = {
     'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default=env("DATABASE_LINK"),
+        default=env("DATABASE_LINK_2"),
+        engine='django_cockroachdb'
     )
 }
 # DATABASES = {

@@ -26,6 +26,7 @@ class Book(TimeStampMixin):
     publication_date = models.DateField(null=True, blank=True)
     quantity = models.IntegerField()
     price = models.DecimalField( max_digits=12, decimal_places=2, default=0)
+    description = models.TextField(blank=True)
 
     def __str__(self) -> str:
         return self.title
