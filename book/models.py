@@ -5,6 +5,7 @@ from publisher.models import Publisher
 from category.models import Category
 # Create your models here.
 class Author(TimeStampMixin):
+    
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     avater = models.ImageField(upload_to='author_avater/', default='./author_avater/avater.jpg')
