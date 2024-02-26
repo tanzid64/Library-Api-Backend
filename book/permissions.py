@@ -25,7 +25,7 @@ class CanManageBooks(BasePermission):
             # Assuming your Book model has a field 'publisher' which stores the publisher's user object
             book_id = view.kwargs.get('pk')
             book = Book.objects.get(pk=book_id)
-            if book.publisher == request.user:
+            if book.publisher == request.user.publisher:
                 return True
         
         # Allow admins to do all actions

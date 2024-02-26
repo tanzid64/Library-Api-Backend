@@ -87,12 +87,12 @@ class UserProfileView(RetrieveUpdateAPIView):
         self.perform_update(serializer)
         return Response(serializer.data)
 
-    def perform_update(self, serializer):
-        if 'avater' in self.request.data:
-            # Handle image upload
-            image = self.request.data['avater']
-            serializer.validated_data['avater'] = image
-        serializer.save()
+    # def perform_update(self, serializer):
+    #     if 'avater' in self.request.data:
+    #         # Handle image upload
+    #         image = self.request.data['avater']
+    #         serializer.validated_data['avater'] = image
+    #     serializer.save()
 
 class UserPasswordChangeView(APIView):
     renderer_classes = [UserRenderer]
