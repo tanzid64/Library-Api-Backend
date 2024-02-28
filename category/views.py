@@ -11,9 +11,5 @@ class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = (IsModOrPublisherOrUser,)
 
-# class SubCategoryView(viewsets.ModelViewSet):
-#     serializer_class = SubCategorySerializer
-#     queryset = SubCategory.objects.all()
-#     permission_classes = (IsModOrPublisherOrUser,)
 
 

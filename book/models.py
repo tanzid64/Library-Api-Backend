@@ -25,7 +25,7 @@ class Book(TimeStampMixin):
     edition = models.CharField(max_length=10)
     cover = models.ImageField(upload_to='book_cover/', default='./book_cover/default.jpg')
     publication_date = models.DateField(null=True, blank=True)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     price = models.DecimalField( max_digits=12, decimal_places=2, default=0)
     description = models.TextField(blank=True)
 
