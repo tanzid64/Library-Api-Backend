@@ -10,9 +10,10 @@ class OpenPublisherSerializer(serializers.ModelSerializer):
 
 class EditPublisherSerializer(serializers.ModelSerializer):
     # book = BookSerializer(many=True)
+    # id = serializers.UUIDField()
     class Meta:
         model = Publisher
-        fields = ['name', 'logo', 'address']
+        fields = ['id', 'name', 'logo', 'address']
     def __init__(self, *args, **kwargs):
         super(EditPublisherSerializer, self).__init__(*args, **kwargs)
         # Make fields optional for partial updates

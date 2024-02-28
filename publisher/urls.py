@@ -11,6 +11,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('create/', OpenPublisherView.as_view(), name='create-publisher-api'),
     path('all/', AllPublisherView.as_view(), name='all-publisher-api'),
-    path('update/<pk>', PublisherUpdateView.as_view(), name='update-publisher-api'),
+    path('update/<pk>/', PublisherUpdateView.as_view(), name='update-publisher-api'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
