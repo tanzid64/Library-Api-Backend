@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status,generics
 from .models import Transaction, Cart
 from book.models import Book
+from django.db.models import Sum
 # Create your views here.
 class CartView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -38,7 +39,6 @@ class CartView(viewsets.ModelViewSet):
         else:
             return Response({'error': 'Low Quantity.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
-        
     def list(self, request, *args, **kwargs):        
         queryset = Cart.objects.filter(user=self.request.user)
         serializer = self.get_serializer(queryset, many=True)
@@ -53,8 +53,6 @@ class CartView(viewsets.ModelViewSet):
         instance.save()
         return Response(serializer.data)
 
-
-
 class DepositView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
@@ -68,7 +66,8 @@ class DepositView(APIView):
                 transaction = Transaction.objects.create(
                     user = user,
                     amount = amount,
-                    type = "Deposit"
+                    type = "Deposit",
+                    book = None
                 )
                 transaction.save()
                 return Response({"message": "Deposit successful"}, status=status.HTTP_201_CREATED)
@@ -77,41 +76,63 @@ class DepositView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class BuyBookAPIView(generics.CreateAPIView):
+# Order Plce helping function
+def buy_book(item,user):
+    book = item.book
+    publisher = book.publisher
+    user.balance -= item.amount
+    user.save() # Update User Balance
+    publisher.balance += item.amount
+    publisher.save() # Update publisher balance
+    book.quantity -= item.quantity
+    book.save() # Update Book quantity
+    Transaction.objects.create( # Create Transaction History
+        user = user,
+        book = book,
+        type = 'Purchase',
+        amount = item.amount
+    )
+    item.delete() # Removing from Cart 
+class PlaceOrderView(generics.CreateAPIView):
     serializer_class = BuyBookSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        book_id = request.data.get('book')
-        book = Book.objects.get(pk=book_id)
-        if book.quantity > 0:
-            user = self.request.user
-            if user.balance >= book.price:
-                amount = book.price
-                
-                user.balance -= amount
-                user.save()
-                publisher = book.publisher
-                publisher.balance += amount
-                publisher.save()
-                book.quantity -= 1
-                book.save()
+        user = self.request.user
+        cart = Cart.objects.filter(user=user)
+        # Checking Cart is empty or not
+        if len(cart) == 0:
+            return Response(
+                {'error': 'Your Cart is empty.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        total_amount = cart.aggregate(total_amount=Sum('amount'))['total_amount']
+        # Check User balance availability
+        print(user.username)
+        if total_amount > user.balance:
+            return Response(
+                {'error': 'Insufficient Balance. Please deposite money.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        # Check Book stock
+        for item in cart:
+            book = item.book
+            if book.quantity < item.quantity:
+                return Response(
+                        {'error': f"{book.title} is low stock."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+        # Place Order
+        for item in cart:
+            buy_book(item, user)
+        return Response(
+            {'message': 'Order placed successfully.'},
+            status=status.HTTP_201_CREATED
+        )
 
-                data = {'amount': amount, 'book': book_id, 'type': 'Purchase'}
-                serializer = self.get_serializer(data=data, context = {'amount':amount, 'user':user})
-                serializer.is_valid(raise_exception=True)
-                serializer.save(user=request.user)
-                return Response({'success': 'Purchase Successfull'}, status=status.HTTP_201_CREATED)
-            else:
-                return Response({'error': 'Insufficient Balance.'}, status=status.HTTP_402_PAYMENT_REQUIRED)
-        else:
-            return Response({'error': 'Low Quantity.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        
 class TransactionReport(generics.ListAPIView):
     serializer_class = TransactionReportSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         return Transaction.objects.filter(user = self.request.user)
     
-
-        

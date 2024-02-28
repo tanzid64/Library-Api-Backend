@@ -1,11 +1,15 @@
 from rest_framework import serializers
 from .models import Transaction
 from .models import Cart
+from book.serializers import BookSerializer
 
 class CartSerializer(serializers.ModelSerializer):
+    book = serializers.SerializerMethodField()
     class Meta:
         model = Cart
         fields = "__all__"
+    def get_book(self, obj):
+        return obj.book.title 
 
 class CartAddSerializer(serializers.Serializer):
     book = serializers.UUIDField()
@@ -28,8 +32,15 @@ class BuyBookSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
     
 class TransactionReportSerializer(serializers.ModelSerializer):
+    book = serializers.SerializerMethodField()  # Define a SerializerMethodField for book
+
     class Meta:
         model = Transaction
         fields = "__all__"
+    
+    def get_book(self, obj):
+        if obj.book:
+            return obj.book.title  # Retrieve the title of the associated book
+
 
 
