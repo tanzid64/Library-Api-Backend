@@ -26,7 +26,7 @@ class BookView(viewsets.ModelViewSet):
     # Filter Section
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['id', 'language', 'isbn', 'publication_date', 'category', 'author', 'publisher']
-    search_fields = ['title', 'isbn', 'language', 'author']
+    search_fields = ['title', 'isbn', 'language', 'author__first_name', 'author__last_name']
 
     def get_serializer_class(self):
         if self.request.method == "GET":
