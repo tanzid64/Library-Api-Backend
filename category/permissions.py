@@ -19,7 +19,7 @@ class IsModOrPublisherOrUser(BasePermission):
 
         # Allow edit and delete access for moderators only
         if request.user.is_authenticated:
-            return request.user.is_mod
+            return request.user.is_staff
 
         # Deny access for anonymous users for edit and delete operations
         return False
