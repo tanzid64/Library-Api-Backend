@@ -25,8 +25,8 @@ class BookView(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     # Filter Section
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['id', 'language', 'isbn', 'publication_date', 'category', 'author']
-    search_fields = ['title', 'isbn', 'language']
+    filterset_fields = ['id', 'language', 'isbn', 'publication_date', 'category', 'author', 'publisher']
+    search_fields = ['title', 'isbn', 'language', 'author']
 
     def get_serializer_class(self):
         if self.request.method == "GET":
