@@ -14,7 +14,7 @@ class IsModOrPublisherOrUser(BasePermission):
             return True
 
         # Allow creation for publishers and moderators
-        if (request.method == 'POST' or request.method=='DELETE') and request.user.is_authenticated:
+        if request.method == 'POST' and request.user.is_authenticated:
             return request.user.is_publisher or request.user.is_staff
 
         # Allow edit and delete access for moderators only
