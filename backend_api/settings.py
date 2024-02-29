@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
+    'drf_spectacular',
     # RestAuth
     'dj_rest_auth',
     'dj_rest_auth.registration',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'book',
     'review',
     'transaction',
+
 ]
 
 
@@ -182,6 +184,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 REST_AUTH = {
     'USE_JWT': True,
@@ -209,3 +212,7 @@ SIMPLE_JWT = {
 }
 SITE_ID = 1
 PASSWORD_RESET_TIMEOUT = 900 # 15 MINUTES
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'E-Lit Emporium'
+}
