@@ -6,12 +6,9 @@ charset-normalizer==3.3.2
 cryptography==42.0.1
 defusedxml==0.8.0rc2
 dj-database-url==2.1.0
-dj-rest-auth==5.0.2
 Django==5.0.1
-django-allauth==0.60.1
 django-cockroachdb==5.0
 django-cors-headers==4.3.1
-django-countries==7.5.1
 django-environ==0.11.2
 django-filter==23.5
 djangorestframework==3.14.0

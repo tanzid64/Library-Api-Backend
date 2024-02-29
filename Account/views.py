@@ -1,5 +1,4 @@
 from typing import Any
-from django.shortcuts import render, redirect
 from .serializers import UserLoginSerializer, AllUserSerializer, UserRegistrationSerializer, UserProfileSerializer, UserProfileUpdateSerializer, UserPasswordChangeSerializer, SendPasswordResetEmailSerializer, UserPasswordResetSerializer
 from .models import User
 
